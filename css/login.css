@@ -1,0 +1,8 @@
+@charset "Shift_JIS";
+.centerText {
+ text-align: center;
+}
+
+.loginText {
+ height: 35px;
+}
