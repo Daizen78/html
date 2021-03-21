@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>備忘録</title>
+	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+
+<header>
+<a href="index.html">TOPへ戻る</a>
+</header>
+
+<body>
+
+<h2>css</h2>
+	classの書き方
+	<p>.(ドット)クラス名 {}
+	<br>.sample {}
+
+<h2>jQuery</h2>
+
+	<h4>イベント</h4>
+	イベント名:click change blur
+	<br>	$('input').on('click', function() {}
+	<br>	$('input').on('change blur', function() {}
+
+	<br>idの場合、# $('#postCode').val()
+	<br>classの場合、.(ドット) $('.postCode').val()
+
+	<h4>使用メソッド一覧</h4>
+	<li>val…値を取得</li>
+	<li>prop…プロパティを取得、設定</li>
+
+<h2>Vue.js</h2>
+
+	性別
+	<select id="sex" v-model="selected">
+		<option v-for="option in options" v-bind:value="option.value">
+			{{ option.text }}
+		</option>
+	</select>
+
+	<br>
+	血液型
+	<select id="bloodType" v-model="selected">
+		<option v-for="option in options" v-bind:value="option.value">
+			{{ option.text }}
+		</option>
+	</select>
+
+</body>
+<footer>
+<!-- scriptは↓に書く-->
+<script type="text/javascript">
+
+
+// 性別
+new Vue({
+	el: '#sex',
+	data: {
+    	selected: ' ',
+    	options: [
+		  { text: ' ', value: ' ' },
+		  { text: '男', value: '1' },
+		  { text: '女', value: '2' },
+		  { text: '非選択', value: '3' }
+		]
+	}
+})
+
+// 血液型
+new Vue({
+	el: '#bloodType',
+	data: {
+    	selected: ' ',
+    	options: [
+		  { text: ' ', value: ' ' },
+		  { text: 'A', value: '1' },
+		  { text: 'B', value: '2' },
+		  { text: 'O', value: '3' },
+		  { text: 'AB', value: '4' }
+		]
+	}
+})
+
+</script>
+</footer>
+</html>
