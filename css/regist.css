@@ -1,0 +1,16 @@
+@charset "Shift_JIS";
+.centered {
+ margin: 0 auto;
+ width: 80%;
+}
+.centeredFont16 {
+ margin: 0 auto;
+ width: 100%;
+ font-size: 16pt;
+}
+
+.req {
+ font-weight: bold;
+}
+
+
