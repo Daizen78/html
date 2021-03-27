@@ -3,7 +3,6 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>備忘録</title>
-	<link type="text/css" rel="stylesheet" href="css/style.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
@@ -34,7 +33,7 @@
 	<li>prop…プロパティを取得、設定</li>
 
 <h2>Vue.js</h2>
-
+<li>セレクトボックスの書き方</li>
 	性別
 	<select id="sex" v-model="selected">
 		<option v-for="option in options" v-bind:value="option.value">
@@ -50,11 +49,29 @@
 		</option>
 	</select>
 
+<br>
+<br>
+<li>セレクトボックスの書き方 その二</li>
+<div id="vue">
+	職業
+	<select id="profession" v-model="profession.text">
+		<option v-for="option in profession" :value="option.value">
+			{{ option.text }}
+		</option>
+	</select>
+
+	<br>
+		郵便番号
+		<input type="text" v-model="postCode" />
+		<input type="submit" value="郵便番号検索" :disabled="postCode == ''">
+	<br>
+	<br>
+</div>
+
 </body>
 <footer>
 <!-- scriptは↓に書く-->
 <script type="text/javascript">
-
 
 // 性別
 new Vue({
@@ -84,6 +101,22 @@ new Vue({
 		]
 	}
 })
+
+new Vue({
+  el: '#vue',
+  data: {
+	profession: [
+		{ text: '', value: '' },
+		{ text: '学生', value: '1' },
+		{ text: '会社員', value: '2' },
+		{ text: '個人事業主', value: '3' },
+		{ text: '主婦・主夫', value: '4' },
+		{ text: '無職', value: '5' },
+		{ text: 'その他', value: '6' }
+	],
+    postCode: ''
+  }
+});
 
 </script>
 </footer>

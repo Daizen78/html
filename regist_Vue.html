@@ -4,63 +4,60 @@
 	<meta charset="utf-8"/>
 	<title>登録画面</title>
 	<link type="text/css" rel="stylesheet" href="css/regist.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-	<script src="js/jquery.autoKana.js" type="text/javascript"></script>
-	<script src="js/regist.js" type="text/javascript"></script>
 </head>
 <header>
 <a href="index.html">TOPへ戻る</a>
 </header>
 
 <body>
-<form name="" action="" method="post">
+<form id="regist" name="" action="" method="post" @change="checkRegist()">
 	<div class="centered">
 	<table border="1">
 	<caption>登録</caption>
 		<tbody>
 			<tr>
 				<td class="req">氏名</td>
-				<td colspan="4"><input type="text" id="fullName" name="fullName" style="width:100%;" placeholder="山田　太郎"></td>
+				<td colspan="4"><input type="text" id="fullName" name="fullName" v-model="fullName" style="width:100%;" placeholder="山田　太郎"></td>
 			</tr>
 			<tr>
 				<td class="req">シメイ</td>
-				<td colspan="4"><input type="text" id="fullNameKana" name="fullNameKana" style="width:100%;" placeholder="ヤマダ　タロウ"></td>
+				<td colspan="4"><input type="text" id="fullNameKana" name="fullNameKana" v-model="fullNameKana" style="width:100%;" placeholder="ヤマダ　タロウ"></td>
 			</tr>
-			<tr>
+			<tr @change="automaticCalculation">
 				<td class="req">生年月日(年齢)</td>
 				<td colsapn="4">
-					<select id="birthDay_y" name="birthDay_y" v-model="selected">
-						<option v-for="option in options" v-bind:value="option.value">
+					<select id="birthDay_y" name="birthDay_y" v-model="birthDay_y.text">
+						<option v-for="option in birthDay_y" :value="option.value">
 							{{ option.text }}
 						</option>
 					</select>
-					<select id="birthDay_m" name="birthDay_m" v-model="selected">
-						<option v-for="option in options" v-bind:value="option.value">
+					<select id="birthDay_m" name="birthDay_m" v-model="birthDay_m.text">
+						<option v-for="option in birthDay_m" :value="option.value">
 							{{ option.text }}
 						</option>
 					</select>
-					<select id="birthDay_d" name="birthDay_d" v-model="selected">
-						<option v-for="option in options" v-bind:value="option.value">
+					<select id="birthDay_d" name="birthDay_d" v-model="birthDay_d.text">
+						<option v-for="option in birthDay_d" :value="option.value">
 							{{ option.text }}
 						</option>
 					</select>
-					<label id="age" name="age"></label>
-					<label id="sign" name="sign"></label>
-					<label id="zodiac" name="zodiac"></label>
+					<td>{{ age }}
+					{{ sign }}
+					{{ zodiac }}</td>
 				</td>
 			</tr>
 			<tr>
 				<td class="req">性別</td>
-				<td><select id="sex" name="sex" v-model="selected">
-					<option v-for="option in options" v-bind:value="option.value">
+				<td><select id="sex" name="sex" v-model="sex.text">
+					<option v-for="option in sex" :value="option.value">
 						{{ option.text }}
 					</option>
 					</select>
 				</td>
 				<td>血液型</td>
-				<td><select id="bloodType" name="bloodType" v-model="selected">
-					<option v-for="option in options" v-bind:value="option.value">
+				<td><select id="bloodType" name="bloodType" v-model="bloodType.text">
+					<option v-for="option in bloodType" :value="option.value">
 						{{ option.text }}
 					</option>
 					</select>型
@@ -69,36 +66,36 @@
 			<tr>
 				<td class="req">郵便番号</td>
 				<td colspan="2">
-					<input type="text" id="postalCode" name="postalCode" maxLength="8" minLength="8" placeholder="100-0014">
-					<input type="submit" id="searchPostCode" value="郵便番号検索" disabled>
+					<input type="text" id="postalCode" name="postalCode" v-model="postalCode" maxLength="8" minLength="8" placeholder="100-0014">
+					<input type="submit" id="searchPostCode" v-model="searchPostCode" :disabled="postalCode.value == ''">
 					<br><div style="font-size: 15px">
 				</td>
 			</tr>
 			<tr>
 				<td class="req">都道府県</td>
-				<td><select id="prefecture" name="prefecture" v-model="selected">
-					<option v-for="option in options" v-bind:value="option.value">
+				<td><select id="prefecture" name="prefecture" v-model="prefecture.text">
+					<option v-for="option in prefecture" :value="option.value">
 						{{ option.text }}
 					</option>
 					</select>
 				</td>
 				<td class="req">市区町村</td>
-				<td colspan="3"><input type="text" id="municipality" name="municipality" placeholder="千代田区"></td>
+				<td colspan="3"><input type="text" id="municipality" name="municipality" v-model="municipality" placeholder="千代田区"></td>
 			</tr>
 			<tr>
 				<td class="req">番地</td>
-				<td><input type="text" id="address" name="address" placeholder="永田町1-7-1"></td>
+				<td><input type="text" id="address" name="address" v-model="address" placeholder="永田町1-7-1"></td>
 				<td>アパート<br>マンション名等</td>
-				<td colspan="3"><input type="text" id="apartment" name="apartment" placeholder="国会議事堂"></td>
+				<td colspan="3"><input type="text" id="apartment" name="apartment" v-model="apartment" placeholder="国会議事堂"></td>
 			</tr>
 			<tr>
 				<td class="req">電話番号</td>
-				<td><input type="text" id="phoneNumber" name="phoneNumber" maxLength="13" placeholder="080-1111-2222"></td>
+				<td><input type="text" id="phoneNumber" name="phoneNumber" v-model="phoneNumber" maxLength="13" placeholder="080-1111-2222"></td>
 			</tr>
 			<tr>
 				<td>職業</td>
-				<td><select id="profession" name="profession" v-model="selected">
-					<option v-for="option in options" v-bind:value="option.value">
+				<td><select id="profession" name="profession" v-model="profession.text">
+					<option v-for="option in profession" :value="option.value">
 						{{ option.text }}
 					</option>
 					</select>
@@ -106,240 +103,39 @@
 			</tr>
 		</tbody>
 	</table>
-	<input type="submit" id="registExe" size="50" value="登録する" class="centeredFont16" disabled>
+	<input type="submit" v-model="registExe" id="registExe" value="登録する" class="centeredFont16" :disabled="isRegist">
 	</div>
-
 <br>
 <br>
-<input type="button" id="inputR" value="必須項目設定">
+<input type="button" value="必須項目設定" @click="setRequired">
 <input type="reset" value="Reset">
 </form>
 
-
-</body>
 <br>
 <footer>
-<script type="text/javascript">
-new Vue({ // 生年月日 年
-	el: '#birthDay_y',
-	data: {
-    	selected: '',
-    	options: [
-			{ text: '', value: '' },
-			{ text: '1983', value: '1983' },
-			{ text: '1984', value: '1984' },
-			{ text: '1985', value: '1985' },
-			{ text: '1986', value: '1986' },
-			{ text: '1987', value: '1987' },
-			{ text: '1988', value: '1988' },
-			{ text: '1989', value: '1989' },
-			{ text: '1990', value: '1990' },
-			{ text: '1991', value: '1991' },
-			{ text: '1992', value: '1992' },
-			{ text: '1993', value: '1993' },
-			{ text: '1994', value: '1994' },
-			{ text: '1995', value: '1995' },
-			{ text: '1996', value: '1996' },
-			{ text: '1997', value: '1997' },
-			{ text: '1998', value: '1998' },
-			{ text: '1999', value: '1999' },
-			{ text: '2000', value: '2000' },
-			{ text: '2001', value: '2001' },
-			{ text: '2002', value: '2002' },
-			{ text: '2003', value: '2003' },
-			{ text: '2004', value: '2004' },
-			{ text: '2005', value: '2005' },
-			{ text: '2006', value: '2006' },
-			{ text: '2007', value: '2007' },
-			{ text: '2008', value: '2008' },
-			{ text: '2009', value: '2009' },
-			{ text: '2010', value: '2010' },
-			{ text: '2011', value: '2011' },
-			{ text: '2012', value: '2012' },
-			{ text: '2013', value: '2013' },
-			{ text: '2014', value: '2014' },
-			{ text: '2015', value: '2015' },
-			{ text: '2016', value: '2016' },
-			{ text: '2017', value: '2017' },
-			{ text: '2018', value: '2018' },
-			{ text: '2019', value: '2019' },
-			{ text: '2020', value: '2020' },
-			{ text: '2021', value: '2021' }
-]}})
-new Vue({ // 生年月日 月
-	el: '#birthDay_m',
-	data: {
-    	selected: '',
-    	options: [
-			{ text: '', value: '' },
-			{ text: '1', value: '01' },
-			{ text: '2', value: '02' },
-			{ text: '3', value: '03' },
-			{ text: '4', value: '04' },
-			{ text: '5', value: '05' },
-			{ text: '6', value: '06' },
-			{ text: '7', value: '07' },
-			{ text: '8', value: '08' },
-			{ text: '9', value: '09' },
-			{ text: '10', value: '10' },
-			{ text: '11', value: '11' },
-			{ text: '12', value: '12' }
-]}})
-
-new Vue({ // 生年月日 日
-	el: '#birthDay_d',
-	data: {
-    	selected: '',
-    	options: [
-			{ text: '', value: '' },
-			{ text: '1', value: '01' },
-			{ text: '2', value: '02' },
-			{ text: '3', value: '03' },
-			{ text: '4', value: '04' },
-			{ text: '5', value: '05' },
-			{ text: '6', value: '06' },
-			{ text: '7', value: '07' },
-			{ text: '8', value: '08' },
-			{ text: '9', value: '09' },
-			{ text: '10', value: '10' },
-			{ text: '11', value: '11' },
-			{ text: '12', value: '12' },
-			{ text: '13', value: '13' },
-			{ text: '14', value: '14' },
-			{ text: '15', value: '15' },
-			{ text: '16', value: '16' },
-			{ text: '17', value: '17' },
-			{ text: '18', value: '18' },
-			{ text: '19', value: '19' },
-			{ text: '20', value: '20' },
-			{ text: '21', value: '21' },
-			{ text: '22', value: '22' },
-			{ text: '23', value: '23' },
-			{ text: '24', value: '24' },
-			{ text: '25', value: '25' },
-			{ text: '26', value: '26' },
-			{ text: '27', value: '27' },
-			{ text: '28', value: '28' },
-			{ text: '29', value: '29' },
-			{ text: '30', value: '30' },
-			{ text: '31', value: '31' }
-]}})
-
-new Vue({ // 性別
-	el: '#sex',
-	data: {
-    	selected: '',
-    	options: [
-			{ text: '', value: '' },
-			{ text: '男', value: '1' },
-			{ text: '女', value: '2' },
-			{ text: '非選択', value: '3' }
-]}})
-new Vue({ // 血液型
-	el: '#bloodType',
-	data: {
-    	selected: '',
-    	options: [
-			{ text: '', value: '' },
-			{ text: 'A', value: '1' },
-			{ text: 'B', value: '2' },
-			{ text: 'O', value: '3' },
-			{ text: 'AB', value: '4' }
-]}})
-
-new Vue({ // 都道府県
-	el: '#prefecture',
-	data: {
-    	selected: '',
-    	options: [
-			{ text: '', value: '' },
-			{ text: '北海道', value: '1' },
-			{ text: '青森県', value: '2' },
-			{ text: '岩手県', value: '3' },
-			{ text: '宮城県', value: '4' },
-			{ text: '秋田県', value: '5' },
-			{ text: '山形県', value: '6' },
-			{ text: '福島県', value: '7' },
-			{ text: '茨城県', value: '8' },
-			{ text: '栃木県', value: '9' },
-			{ text: '群馬県', value: '10' },
-			{ text: '埼玉県', value: '11' },
-			{ text: '千葉県', value: '12' },
-			{ text: '東京都', value: '13' },
-			{ text: '神奈川県', value: '14' },
-			{ text: '新潟県', value: '15' },
-			{ text: '富山県', value: '16' },
-			{ text: '石川県', value: '17' },
-			{ text: '福井県', value: '18' },
-			{ text: '山梨県', value: '19' },
-			{ text: '長野県', value: '20' },
-			{ text: '岐阜県', value: '21' },
-			{ text: '静岡県', value: '22' },
-			{ text: '愛知県', value: '23' },
-			{ text: '三重県', value: '24' },
-			{ text: '滋賀県', value: '25' },
-			{ text: '京都府', value: '26' },
-			{ text: '大阪府', value: '27' },
-			{ text: '兵庫県', value: '28' },
-			{ text: '奈良県', value: '29' },
-			{ text: '和歌山県', value: '30' },
-			{ text: '鳥取県', value: '31' },
-			{ text: '島根県', value: '32' },
-			{ text: '岡山県', value: '33' },
-			{ text: '広島県', value: '34' },
-			{ text: '山口県', value: '35' },
-			{ text: '徳島県', value: '36' },
-			{ text: '香川県', value: '37' },
-			{ text: '愛媛県', value: '38' },
-			{ text: '高知県', value: '39' },
-			{ text: '福岡県', value: '40' },
-			{ text: '佐賀県', value: '41' },
-			{ text: '長崎県', value: '42' },
-			{ text: '熊本県', value: '43' },
-			{ text: '大分県', value: '44' },
-			{ text: '宮崎県', value: '45' },
-			{ text: '鹿児島県', value: '46' },
-			{ text: '沖縄県', value: '47' }
-]}})
-
-new Vue({ // 職業
-	el: '#profession',
-	data: {
-    	selected: '',
-    	options: [
-			{ text: '', value: '' },
-			{ text: '学生', value: '1' },
-			{ text: '会社員', value: '2' },
-			{ text: '個人事業主', value: '3' },
-			{ text: '主婦・主夫', value: '4' },
-			{ text: '無職', value: '5' },
-			{ text: 'その他', value: '6' }
-]}})
-</script>
+	<script src="js/regist_Vue.js" type="text/javascript"></script>
 
 	<h4>実装した機能</h4>
 	<ul style="font-size: 15px">
-		<li>初期表示時に郵便番号検索、登録するボタンを非活性に</li>
-		<li>シメイのフリガナの自動入力(jquery.autoKana.js使用)</li>
+		<li>郵便番号入力で郵便番号検索ボタンを活性する</li>
 		<li>年齢の自動計算</li>
 		<li>星座の自動計算</li>
 		<li>十二支の自動計算</li>
-		<li>郵便番号入力で郵便番号検索ボタンを活性する</li>
 		<li>必須項目入力で登録ボタンを活性する※必須項目は太字</li>
 		<li>必須項目をとりあえず設定してくれるボタン</li>
 		<li>リセットボタン</li>
 	</ul>
 
-	<h4>課題</h4>
-	<ul style="font-size: 15px">
-		<li>レイアウト調整</li>
-	</ul>
-<br>
-	<h4>できたらつける機能</h4>
+	<h4>実装予定の機能</h4>
 	<ul style="font-size: 15px">
 		<li>年月日の月ごとの日の考慮(閏年)</li>
 		<li>郵便番号検索</li>
 		<li>電話番号のハイフンを自動で付与する(編集時はハイフン削除する)</li>
+	</ul>
+
+	<h4>課題</h4>
+	<ul style="font-size: 15px">
+		<li>レイアウト調整</li>
 	</ul>
 
 	<h4>スタイル</h4>
