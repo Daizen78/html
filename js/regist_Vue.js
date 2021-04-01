@@ -194,8 +194,8 @@ new Vue({
 				this.fullName = '山田　花子' 
 				this.fullNameKana = 'ヤマダ　ハナコ'
 				this.birthDay_y.text = '1983'
-				this.birthDay_m.text = '07'
-				this.birthDay_d.text = '08'
+				this.birthDay_m.text = '7'
+				this.birthDay_d.text = '8'
 				this.age = '37'
 				this.sign = '蟹座'
 				this.zodiac = '亥'
@@ -210,24 +210,22 @@ new Vue({
 
 		automaticCalculation: function() {
 			y = birthDay_y.value
-			m = birthDay_m.value-1
-			d = birthDay_d.value
-			this.age = this.ageCalc(y, m, d)
-			this.sign = this.signCalc(this.toStringPadStart(m, 2) + this.toStringPadStart(d, 2))
+			m = birthDay_m.value
+			dd = birthDay_d.value
+			this.age = this.ageCalc(y, m, dd)
+			this.sign = this.signCalc(this.toStringPadStart2(m) + this.toStringPadStart2(dd))
 			this.zodiac = this.zodiacCalc(y)
 		},
 
 		ageCalc: function(y, m, d) {
-			age = "";
 			if(y && m && d) {
-				birthDay = this.dateFormat_yyyyMMdd(new Date(y, m, d));
-				age = Math.floor((this.dateFormat_yyyyMMdd() - birthDay) /10000);
+				birthDay = this.dateFormat_yyyyMMdd(new Date(y, m-1, d));
+				return Math.floor((this.dateFormat_yyyyMMdd() - birthDay) /10000);
 			}
-			return age
+			return ""
 		},
 
 		signCalc: function(md) {
-			sign ="";
 			if (md) {
 				const list = ["牡羊座","牡牛座","双子座","蟹座","獅子座","乙女座","天秤座","蠍座","射手座","山羊座","水瓶座","魚座"];
 				num = -1
@@ -243,31 +241,29 @@ new Vue({
 				else if ("1222" <= md || (md >= "0101" && md <= "0119")) num = 9
 				else if ("0120" <= md && md <= "0218") num = 10
 				else if ("0219" <= md && md <= "0320") num = 11
-				sign = list[num]
+				return list[num]
 			}
-			return sign;
+			return "";
 		},
 
-		zodiacCalc: function(val) {
-			zodiac = "";
-			if (val) {
+		zodiacCalc: function(y) {
+			if (y) {
 				const list= ["申","酉","戌","亥","子","丑","寅","卯","辰","巳","午","未"];
-				zodiac = list[val % 12];
+				return list[y % 12];
 			}
-			return zodiac;
+			return "";
 		},
 
 		dateFormat_yyyyMMdd: function(date) {
-			d = date;
 			if (date) {
-				return d.getFullYear() + this.toStringPadStart(d.getMonth(), 2) + this.toStringPadStart(d.getDate(), 2);
+				return d.getFullYear() + this.toStringPadStart2(d.getMonth()) + this.toStringPadStart2(d.getDate());
 			}
 			d = new Date();
-			return d.getFullYear() + this.toStringPadStart(d.getMonth()+1, 2) + this.toStringPadStart(d.getDate(), 2);
+			return d.getFullYear() + this.toStringPadStart2(d.getMonth()+1) + this.toStringPadStart2(d.getDate());
 		},
 
-		toStringPadStart: function(val, targetLength) {
-			return val.toString().padStart(targetLength, '0')
+		toStringPadStart2: function(val) {
+			return val.toString().padStart(2, '0')
 		},
 	}
 });

@@ -6,11 +6,12 @@
 	<link type="text/css" rel="stylesheet" href="css/regist.css" />
 	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
+
+<body>
 <header>
 <a href="index.html">TOPへ戻る</a>
 </header>
 
-<body>
 <form id="regist" name="" action="" method="post" @change="checkRegist()">
 	<div class="centered">
 	<table border="1">
@@ -136,6 +137,12 @@
 	<h4>課題</h4>
 	<ul style="font-size: 15px">
 		<li>レイアウト調整</li>
+	</ul>
+
+	<h4>発生したバグ</h4>
+	<ul style="font-size: 15px">
+		<li>メソッド内にthisありなしを混在させた場合thisなしが設定されない。全部thisありにして解決</li>
+		<li>生年月日の月が1の場合先に-1してしまっていたため、結果が1つずつずれていた。※原因は判定条件の0をfalse判定していた</li>
 	</ul>
 
 	<h4>スタイル</h4>

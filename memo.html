@@ -40,31 +40,21 @@
 			{{ option.text }}
 		</option>
 	</select>
-
 	<br>
 	血液型
-	<select id="bloodType" v-model="selected">
-		<option v-for="option in options" v-bind:value="option.value">
+	<select id="bloodType" v-model="bloodType.value">
+		<option v-for="option in bloodType" :value="option.value">
 			{{ option.text }}
 		</option>
-	</select>
+	</select>型
 
 <br>
 <br>
-<li>セレクトボックスの書き方 その二</li>
+<li>テキストとボタン連動</li>
 <div id="vue">
-	職業
-	<select id="profession" v-model="profession.text">
-		<option v-for="option in profession" :value="option.value">
-			{{ option.text }}
-		</option>
-	</select>
-
-	<br>
-		郵便番号
-		<input type="text" v-model="postCode" />
-		<input type="submit" value="郵便番号検索" :disabled="postCode == ''">
-	<br>
+	郵便番号
+	<input type="text" v-model="postCode" placeholder="入力で検索ボタン活性"/>
+	<input type="submit" value="郵便番号検索" :disabled="postCode == ''">
 	<br>
 </div>
 
@@ -77,7 +67,7 @@
 new Vue({
 	el: '#sex',
 	data: {
-    	selected: ' ',
+    	selected: '1',
     	options: [
 		  { text: ' ', value: ' ' },
 		  { text: '男', value: '1' },
@@ -91,8 +81,7 @@ new Vue({
 new Vue({
 	el: '#bloodType',
 	data: {
-    	selected: ' ',
-    	options: [
+    	bloodType: [
 		  { text: ' ', value: ' ' },
 		  { text: 'A', value: '1' },
 		  { text: 'B', value: '2' },
