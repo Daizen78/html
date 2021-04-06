@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 	<meta charset="utf-8"/>
 	<title>登録画面</title>
@@ -38,8 +38,8 @@
 							{{ option.text }}
 						</option>
 					</select>
-					<select id="birthDay_d" name="birthDay_d" v-model="birthDay_d.text">
-						<option v-for="option in birthDay_d" :value="option.value">
+					<select id="birthDay_d" name="birthDay_d" v-model="birthDay_d.value">
+						<option v-for="option in birthDay_d_slice" :value="option.value">
 							{{ option.text }}
 						</option>
 					</select>
@@ -118,18 +118,15 @@
 
 	<h4>実装した機能</h4>
 	<ul style="font-size: 15px">
-		<li>郵便番号入力で郵便番号検索ボタンを活性する</li>
-		<li>年齢の自動計算</li>
-		<li>星座の自動計算</li>
-		<li>十二支の自動計算</li>
-		<li>必須項目入力で登録ボタンを活性する※必須項目は太字</li>
+		<li>自動計算(年齢、星座、十二支)
+		<li>年月日制御(月ごとの日の考慮、閏年)</li>
+		<li>活性制御(郵便番号入力で郵便番号検索ボタン活性、必須項目入力で登録ボタン活性)</li>
 		<li>必須項目をとりあえず設定してくれるボタン</li>
 		<li>リセットボタン</li>
 	</ul>
 
 	<h4>実装予定の機能</h4>
 	<ul style="font-size: 15px">
-		<li>年月日の月ごとの日の考慮(閏年)</li>
 		<li>郵便番号検索</li>
 		<li>電話番号のハイフンを自動で付与する(編集時はハイフン削除する)</li>
 	</ul>

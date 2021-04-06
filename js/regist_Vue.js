@@ -59,7 +59,6 @@ new Vue({
 			{ text: '12', value: '12' }
 		],
 	    birthDay_d: [
-			
 			{ text: '1', value: '1' },
 			{ text: '2', value: '2' },
 			{ text: '3', value: '3' },
@@ -92,6 +91,7 @@ new Vue({
 			{ text: '30', value: '30' },
 			{ text: '31', value: '31' }
 		],
+		birthDay_d_slice: '',
 		age: '',
 		sign: '',
 		zodiac: '',
@@ -209,12 +209,23 @@ new Vue({
 		},
 
 		automaticCalculation: function() {
-			y = birthDay_y.value
-			m = birthDay_m.value
-			dd = birthDay_d.value
-			this.age = this.ageCalc(y, m, dd)
-			this.sign = this.signCalc(this.toStringPadStart2(m) + this.toStringPadStart2(dd))
+			let y = birthDay_y.value
+			let m = birthDay_m.value
+			let d = birthDay_d.value
+			this.age = this.ageCalc(y, m, d)
+			this.sign = this.signCalc(this.toStringPadStart2(m) + this.toStringPadStart2(d))
 			this.zodiac = this.zodiacCalc(y)
+
+			let preLength = this.birthDay_d_slice.length
+			this.birthDay_d_slice = this.birthDay_d.slice(0, this.dayCalc(y, m))
+			// 設定してある日が変更後の月に存在しない場合、日をリセットする
+			if (preLength < this.birthDay_d.value) {
+				this.birthDay_d.value = "";
+			}
+		},
+
+		dayCalc: function(y, m) {
+			return new Date(y, m, 0).getDate();
 		},
 
 		ageCalc: function(y, m, d) {
@@ -256,9 +267,9 @@ new Vue({
 
 		dateFormat_yyyyMMdd: function(date) {
 			if (date) {
-				return d.getFullYear() + this.toStringPadStart2(d.getMonth()) + this.toStringPadStart2(d.getDate());
+				return date.getFullYear() + this.toStringPadStart2(date.getMonth()) + this.toStringPadStart2(date.getDate());
 			}
-			d = new Date();
+			let d = new Date();
 			return d.getFullYear() + this.toStringPadStart2(d.getMonth()+1) + this.toStringPadStart2(d.getDate());
 		},
 
