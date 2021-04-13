@@ -68,7 +68,7 @@
 				<td class="req">郵便番号</td>
 				<td colspan="2">
 					<input type="text" id="postalCode" name="postalCode" v-model="postalCode" maxLength="8" minLength="8" placeholder="100-0014">
-					<input type="submit" id="searchPostCode" v-model="searchPostCode" :disabled="postalCode.value == ''">
+					<input type="button" id="searchPostCode" v-model="searchPostCode" :disabled="postalCode.value == ''" @click="serchPostalCode">
 					<br><div style="font-size: 15px">
 				</td>
 			</tr>
@@ -114,12 +114,14 @@
 
 <br>
 <footer>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="js/regist_Vue.js" type="text/javascript"></script>
 
 	<h4>実装した機能</h4>
 	<ul style="font-size: 15px">
 		<li>自動計算(年齢、星座、十二支)
 		<li>年月日制御(月ごとの日の考慮、閏年)</li>
+		<li>郵便番号検索(REST API)</li>
 		<li>活性制御(郵便番号入力で郵便番号検索ボタン活性、必須項目入力で登録ボタン活性)</li>
 		<li>必須項目をとりあえず設定してくれるボタン</li>
 		<li>リセットボタン</li>
@@ -127,7 +129,6 @@
 
 	<h4>実装予定の機能</h4>
 	<ul style="font-size: 15px">
-		<li>郵便番号検索</li>
 		<li>電話番号のハイフンを自動で付与する(編集時はハイフン削除する)</li>
 	</ul>
 

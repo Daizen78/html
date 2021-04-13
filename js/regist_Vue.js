@@ -1,3 +1,5 @@
+const API = 'https://zipcloud.ibsnet.co.jp/api/search'
+
 new Vue({
 	el: '#regist',
 	data: {
@@ -106,7 +108,7 @@ new Vue({
 			{ text: 'O',  value: '3' },
 			{ text: 'AB', value: '4' }
 		],
-		postalCode: '',
+		postalCode: '133-0051',
 		searchPostCode: '郵便番号検索',
 		prefecture: [
 			{ text: '北海道', value: '1' },
@@ -173,57 +175,6 @@ new Vue({
 		isRegist: true,
 	},
 	methods: {
-		checkRegist: function() {
-			this.isRegist = (
-				this.fullName == '' 
-				|| this.fullNameKana == ''
-				|| this.birthDay_y == ''
-				|| this.birthDay_m == ''
-				|| this.birthDay_d == ''
-				|| this.age == ''
-				|| this.sex == ''
-				|| this.postalCode == ''
-				|| this.prefecture == ''
-				|| this.municipality == ''
-				|| this.address == ''
-				|| this.phoneNumber == ''
-			)
-		},
-
-		setRequired: function() {
-				this.fullName = '山田　花子' 
-				this.fullNameKana = 'ヤマダ　ハナコ'
-				this.birthDay_y.text = '1983'
-				this.birthDay_m.text = '7'
-				this.birthDay_d.text = '8'
-				this.age = '37'
-				this.sign = '蟹座'
-				this.zodiac = '亥'
-				this.sex.text = '1'
-				this.postalCode = '111-2222'
-				this.prefecture.text = '13'
-				this.municipality = '千代田区'
-				this.address = '永田町'
-				this.phoneNumber = '080-1111-2222'
-				this.isRegist = false
-		},
-
-		automaticCalculation: function() {
-			let y = birthDay_y.value
-			let m = birthDay_m.value
-			let d = birthDay_d.value
-			this.age = this.ageCalc(y, m, d)
-			this.sign = this.signCalc(this.toStringPadStart2(m) + this.toStringPadStart2(d))
-			this.zodiac = this.zodiacCalc(y)
-
-			let preLength = this.birthDay_d_slice.length
-			this.birthDay_d_slice = this.birthDay_d.slice(0, this.dayCalc(y, m))
-			// 設定してある日が変更後の月に存在しない場合、日をリセットする
-			if (preLength < this.birthDay_d.value) {
-				this.birthDay_d.value = "";
-			}
-		},
-
 		dayCalc: function(y, m) {
 			return new Date(y, m, 0).getDate();
 		},
@@ -275,6 +226,81 @@ new Vue({
 
 		toStringPadStart2: function(val) {
 			return val.toString().padStart(2, '0')
+		},
+
+		checkRegist: function() {
+			this.isRegist = (
+				this.fullName == '' 
+				|| this.fullNameKana == ''
+				|| this.birthDay_y == ''
+				|| this.birthDay_m == ''
+				|| this.birthDay_d == ''
+				|| this.age == ''
+				|| this.sex == ''
+				|| this.postalCode == ''
+				|| this.prefecture == ''
+				|| this.municipality == ''
+				|| this.address == ''
+				|| this.phoneNumber == ''
+			)
+		},
+		setRequired: function() {
+				this.fullName = '山田　花子' 
+				this.fullNameKana = 'ヤマダ　ハナコ'
+				this.birthDay_y.text = '1983'
+				this.birthDay_m.text = '7'
+				this.birthDay_d.text = '8'
+				this.age = '37'
+				this.sign = '蟹座'
+				this.zodiac = '亥'
+				this.sex.text = '1'
+				this.postalCode = '111-2222'
+				this.prefecture.text = '13'
+				this.municipality = '千代田区'
+				this.address = '永田町'
+				this.phoneNumber = '080-1111-2222'
+				this.isRegist = false
+		},
+
+		automaticCalculation: function() {
+			let y = birthDay_y.value
+			let m = birthDay_m.value
+			let d = birthDay_d.value
+			this.age = this.ageCalc(y, m, d)
+			this.sign = this.signCalc(this.toStringPadStart2(m) + this.toStringPadStart2(d))
+			this.zodiac = this.zodiacCalc(y)
+
+			let preLength = this.birthDay_d_slice.length
+			this.birthDay_d_slice = this.birthDay_d.slice(0, this.dayCalc(y, m))
+			// 設定してある日が変更後の月に存在しない場合、日をリセットする
+			if (preLength < this.birthDay_d.value) {
+				this.birthDay_d.value = "";
+			}
+		},
+
+		serchPostalCode: function() {
+			let param = {zipcode: this.postalCode}
+			this.getAPI(API, param, this.setAddress)
+		},
+
+		setAddress: function(res) {
+			// res.address1
+			this.municipality = res.address2
+			this.address = res.address3
+			// kana1
+			// kana2
+			// kana3
+			this.prefecture.text = res.prefcode
+			// zipcode
+		},
+
+		getAPI: function(url, param, setFunc) {
+			axios.get(url, {params: param})
+			.then(response => {
+				let res = response.data.results[0]
+				setFunc(res)
+			})
+			.catch(response => console.log(response))
 		},
 	}
 });
