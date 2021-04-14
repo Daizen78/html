@@ -38,8 +38,8 @@
 							{{ option.text }}
 						</option>
 					</select>
-					<select id="birthDay_d" name="birthDay_d" v-model="birthDay_d.value">
-						<option v-for="option in birthDay_d_slice" :value="option.value">
+					<select id="birthDay_d" name="birthDay_d" v-model="birthDay_d_list.text">
+						<option v-for="option in birthDay_d" :value="option.value">
 							{{ option.text }}
 						</option>
 					</select>
@@ -68,7 +68,7 @@
 				<td class="req">郵便番号</td>
 				<td colspan="2">
 					<input type="text" id="postalCode" name="postalCode" v-model="postalCode" maxLength="8" minLength="8" placeholder="100-0014">
-					<input type="button" id="searchPostCode" v-model="searchPostCode" :disabled="postalCode.value == ''" @click="serchPostalCode">
+					<input type="button" id="searchPostCode" v-model="searchPostCode" :disabled="postalCode == ''" @click="serchPostalCode">
 					<br><div style="font-size: 15px">
 				</td>
 			</tr>
@@ -121,7 +121,7 @@
 	<ul style="font-size: 15px">
 		<li>自動計算(年齢、星座、十二支)
 		<li>年月日制御(月ごとの日の考慮、閏年)</li>
-		<li>郵便番号検索(REST API)</li>
+		<li>郵便番号検索(API)</li>
 		<li>活性制御(郵便番号入力で郵便番号検索ボタン活性、必須項目入力で登録ボタン活性)</li>
 		<li>必須項目をとりあえず設定してくれるボタン</li>
 		<li>リセットボタン</li>
@@ -141,6 +141,8 @@
 	<ul style="font-size: 15px">
 		<li>メソッド内にthisありなしを混在させた場合thisなしが設定されない。全部thisありにして解決</li>
 		<li>生年月日の月が1の場合先に-1してしまっていたため、結果が1つずつずれていた。※原因は判定条件の0をfalse判定していた</li>
+		<li>郵便番号検索ボタンが非活性にならなくなっていた ※.valueの記載を削除</li>
+		<li>Resetボタン押下でリストの1番上が設定される</li>
 	</ul>
 
 	<h4>スタイル</h4>

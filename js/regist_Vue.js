@@ -60,7 +60,8 @@ new Vue({
 			{ text: '11', value: '11' },
 			{ text: '12', value: '12' }
 		],
-	    birthDay_d: [
+	    birthDay_d: '',
+		birthDay_d_list: [
 			{ text: '1', value: '1' },
 			{ text: '2', value: '2' },
 			{ text: '3', value: '3' },
@@ -93,7 +94,6 @@ new Vue({
 			{ text: '30', value: '30' },
 			{ text: '31', value: '31' }
 		],
-		birthDay_d_slice: '',
 		age: '',
 		sign: '',
 		zodiac: '',
@@ -108,7 +108,7 @@ new Vue({
 			{ text: 'O',  value: '3' },
 			{ text: 'AB', value: '4' }
 		],
-		postalCode: '133-0051',
+		postalCode: '',
 		searchPostCode: '郵便番号検索',
 		prefecture: [
 			{ text: '北海道', value: '1' },
@@ -270,8 +270,8 @@ new Vue({
 			this.sign = this.signCalc(this.toStringPadStart2(m) + this.toStringPadStart2(d))
 			this.zodiac = this.zodiacCalc(y)
 
-			let preLength = this.birthDay_d_slice.length
-			this.birthDay_d_slice = this.birthDay_d.slice(0, this.dayCalc(y, m))
+			let preLength = this.birthDay_d.length
+			this.birthDay_d = this.birthDay_d_list.slice(0, this.dayCalc(y, m))
 			// 設定してある日が変更後の月に存在しない場合、日をリセットする
 			if (preLength < this.birthDay_d.value) {
 				this.birthDay_d.value = "";
@@ -302,6 +302,16 @@ new Vue({
 			})
 			.catch(response => console.log(response))
 		},
-	}
+	},
+	beforeCreate: function(){},
+	created: function(){
+		this.birthDay_d = this.birthDay_d_list
+	},
+	beforeMount: function(){},
+	mounted: function(){},
+	beforeUpdate: function(){},
+	updated: function(){},
+	beforeDestroy: function(){},
+	destroyed: function(){},
 });
 
